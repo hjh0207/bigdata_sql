@@ -1,23 +1,29 @@
 import sqlite3
 
-print(sqlite3.version) # 버전확인
+# 연결
+def db_con():
+    return sqlite3.connect('dbdb.db')
 
-# sqlite db 파일 생성 및 연결
-con = sqlite3.connect('dbdb.db')
-print(type(con))
-cursor = con.cursor() # sql 문장을 실행시키기 위해 준비
-'''
-안녕
-여러줄로 주석 또는 문장을 
-할수 있다
-'''
-"한줄 문장"
-sql = '''
-CREATE TABLE "Person" (
-    "ID"    INTEGER NOT NULL,
-    "Name"  TEXT NOT NULL,
-    "Birthday"  TEXT,
-    PRIMARY KEY("ID" AUTOINCREMENT)
-)
-'''
-cursor.execute(sql) # sql 을 실행
+# 데이터 넣기
+def save_data():
+    con = db_con()
+    cursor = con.cursor()
+    sql = '''
+    INSERT INTO Person (ID, Name, Birthday)
+    VALUES (1, '이혜리', '1994-06-09');
+    '''
+    cursor.execute(sql) # sql 을 실행
+    con.commit()
+    con.close()
+
+#데이터 보기 함수
+def get_data():
+    sql = '''
+    SELECT * FROM Person;
+    '''
+    cursor.execute(sql) # sql 을 실행
+    #data = cursor.fetchone()
+    #print(data)
+
+    all_data = cursor.fetchall()
+    print(all_data)
