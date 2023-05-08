@@ -1,15 +1,21 @@
 import sqlite3
 
-
+# sqlite db 파일 생성 및 연결
 con = sqlite3.connect('dbdb.db')
-cursor = con.cursor() # sql 문장을 실행시키기 위해 준비
+# sql 문장을 실행시키기 위해 준비
+cursor = con.cursor() 
 
 sql = '''
-SELECT * FROM Person;
+SELECT * FROM melon where artist = '임영웅'
 '''
 cursor.execute(sql) # sql 을 실행
-#data = cursor.fetchone()
-#print(data)
+# 하나의 데이터를 보기
+# data = cursor.fetchone()
+# print(data)
 
+# 전체 데이터 보기
 all_data = cursor.fetchall()
-print(all_data)
+# print(all_data)
+
+for d in all_data:
+    print(f'{d[0]}위 {d[1]} - {d[2]}')
